@@ -17,5 +17,6 @@
 		?>
 
 	</section>
+	<script src="views/js/validar.js"></script>
 </body>
 </html> 
