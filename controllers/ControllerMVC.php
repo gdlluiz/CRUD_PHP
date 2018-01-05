@@ -82,7 +82,7 @@
 					<td>'.$item["email"].'</td>
 					<td>'.$item["password"].'</td>
 					<td><a href="index.php?action=editar&id='.$item["id"].'"><button>Editar</button></a></td>
-					<td><A><button>Eliminar</button></a></td>
+					<td><a href="index.php?action=usuarios&idBorrar='.$item["id"].'"><button>Eliminar</button></a></td>
 				</tr>';
 			}
 		}
@@ -91,10 +91,52 @@
 		#-------------------------------------------
 
 		public function editUserController(){
-			$datos = $_GET["id"];
-			echo $datos;
+			$data = $_GET["id"];
+			$response = Crud::editUserModel($data, "usuarios");
+
+			echo '	<input type="hidden" value="'.$response["id"].'" name="id" required>
+					<input type="text" value="'.$response["name"].'" name="user" required>
+					<input type="text" value="'.$response["password"].'" name="password" required>
+					<input type="email" value="'.$response["email"].'" name="email" required>';
 		}
 
+
+		# ACTUALIZAR USUARIO
+		#-------------------------------------------
+
+		public function updateUserController(){
+			if(isset($_POST["user"])){
+				$data = array(	"id"=>$_POST["id"],
+								"user"=>$_POST["user"],
+								"password"=>$_POST["password"],
+								"email"=>$_POST["email"]);
+				$response = Crud::updateUserModel($data, "usuarios");
+
+				if($response == "success"){
+					header("location:index.php?action=cambio");
+
+				}
+				else{
+					echo "Error al actualizar";
+				}
+			}
+		}
+
+
+		# BORRAR USUARIO
+		#-------------------------------------------
+
+		public function deleteUserController(){
+			if(isset($_GET["idBorrar"])){
+				$data = $_GET["idBorrar"];
+				$response = Crud::deleteUserModel($data, "usuarios");
+
+				if($response == "success"){
+					header("location:index.php?action=usuarios");
+
+				}
+			}
+		}
 
 	}
 

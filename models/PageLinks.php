@@ -22,10 +22,11 @@
 				case 'fallo':
 					$module = "views/modules/ingresar.php";
 					break;
+				case 'cambio':
+					$module = "views/modules/usuarios.php";
+					break;				
 				default:
-					# white list
 					$module = "views/modules/registro.php";
-
 					break;
 			}
 			return $module;

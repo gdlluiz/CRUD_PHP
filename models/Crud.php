@@ -56,10 +56,50 @@ require_once "Connection.php";
 			# EDITAR USUARIO
 		#-------------------------------------------
 		public function editUserModel($data, $table){
+			$stmt = Connection::connect()->prepare("SELECT * FROM $table WHERE id = :id");
+			$stmt->bindParam(":id", $data, PDO::PARAM_INT);
+			if($stmt->execute()){
+				return $stmt->fetch();
+			}
+			else{
+				return "error";
+			}
+			$stmt->close();
+		}
+
+		# ACTUALIZAR USUARIO
+		#-------------------------------------------
+		public function updateUserModel($data, $table){
+			$stmt = Connection::connect()->prepare("UPDATE $table SET name = :name, password = :password, email= :email WHERE id = :id");
+			$stmt->bindParam(":name", $data["user"], PDO::PARAM_STR);
+			$stmt->bindParam(":password", $data["password"], PDO::PARAM_STR);
+			$stmt->bindParam(":email", $data["email"], PDO::PARAM_STR);
+			$stmt->bindParam(":id", $data["id"], PDO::PARAM_INT);
+			if($stmt->execute()){
+				return "success";
+			}
+			else{
+				return "error";
+			}
+			$stmt->close();
 			
 		}
 
+		# BORRAR USUARIO
+		#-------------------------------------------
 
+		public function deleteUserModel($data, $table){
+			$stmt = Connection::connect()->prepare("DELETE FROM $table WHERE id = :id");
+			$stmt->bindParam(":id", $data, PDO::PARAM_INT);
+				if($stmt->execute()){
+				return "success";
+			}
+			else{
+				return "error";
+			}
+			$stmt->close();
+			
+		}
 	}
 
 ?>

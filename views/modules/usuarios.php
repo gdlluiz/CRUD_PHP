@@ -24,9 +24,17 @@
 		<?php
 	$lista = new ControllerMVC();
 	$lista->userListController();
+	$lista->deleteUserController();
 
 
 ?>
 	</tbody>
 </table>
-
+<?php
+	if(isset($_GET["action"])){
+		if($_GET["action"] == "cambio"){
+			echo "Usuario Actualizado";
+		}
+	}
+	
+?>
